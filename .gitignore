@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+
+# Dependency directories
+npm-debug.log
+yarn-error.log
+
+# dotenv environment variables file
+.env
+
+# Mac OS
+.DS_Store
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# Test coverage directory
+coverage/
+
+# Production build
+build/
+
+# Dependency lock files
+package-lock.json
+yarn.lock
+
+# .env.local for local environment variables
+.env.local
+
+# Environment variables
+.env.*
+
+# Gitignore itself
+!.gitignore
