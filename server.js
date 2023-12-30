@@ -1,14 +1,14 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
+import authRouter from './routes/auth_router.js';
 
 dotenv.config();
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send(JSON.stringify({ message: 'Hello World!' }));
-});
+app.use(express.json());
+app.use('/auth', authRouter);
 
 mongoose
   .connect(process.env.MONGO_URL)
