@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -31,7 +32,9 @@ const userSchema = new mongoose.Schema({
     default: 'user',
   },
 });
+
 userSchema.timestamps = true;
+
 userSchema.statics.signup = async function (username, email, password) {
   try {
     const unameExists = await this.findOne({ username });
@@ -48,6 +51,22 @@ userSchema.statics.signup = async function (username, email, password) {
       password,
     });
     await user.save();
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
+userSchema.statics.login = async function (username, password) {
+  try {
+    const user = await this.findOne({ username });
+    if (!user) {
+      throw new Error('User does not exist');
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new Error('Invalid credentials');
+    }
     return user;
   } catch (err) {
     throw err;
