@@ -1,12 +1,25 @@
+import dotenv from 'dotenv';
 import express from 'express';
-import { PORT } from './config.js';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import authRouter from './routes/auth_router.js';
+
+dotenv.config();
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send(JSON.stringify({ message: 'Hello World!' }));
-});
+app.use(cors());
+app.use(express.json());
+app.use('/auth', authRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(process.env.PORT, () => {
+      console.log(`Server is running on port ${process.env.PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log('Error connecting to MongoDB', error.message);
+  });
